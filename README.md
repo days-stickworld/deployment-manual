@@ -10,7 +10,7 @@ Om een functionerende infrastructuur op te zetten voor DAY's Stickworld zijn er 
 ### Deployment van de infrastructuur
 > :warning: **Let op**: Voor de deployment gaan we ervan uit dat er een **docker** omgeving beschikbaar is. Voor meer informatie omtrent docker, [klik hier](https://docs.docker.com/).
 
-De docker containers van de gehoste componenten zijn te vinden in de bijbehorende repositories, onder "packages". Hieronder is een docker-compose file te vinden waarmee alle services gemakkelijk in één keer gedeployed kunnen worden. Kopieer dit bestand naar een machine waar docker op geïnstalleerd staat en run het commando `docker-compose up`, het kan ook zijn dat dit zonder streepje is (`docker compose up`). Om de stack te stoppen kun je het commando `docker-compose down` gebruiken.
+De docker containers van de gehoste componenten zijn te vinden in de bijbehorende repositories, onder "packages". Hieronder is een docker-compose file te vinden waarmee alle services gemakkelijk in één keer gedeployed kunnen worden. Kopieer dit bestand naar een machine waar docker op geïnstalleerd staat en run het commando `docker-compose up`, het kan ook zijn dat dit zonder streepje is (`docker compose up`). Om de stack te stoppen kun je het commando `docker-compose down` gebruiken. TIP: Het docker-compose.yml bestand kun je ook vinden in deze repository.
 ```
 version: "3.4"
 services:
