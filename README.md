@@ -21,6 +21,8 @@ services:
     environment:
       - REDIS_HOST=redis
       - PUBLIC_IP=127.0.0.1 # Aanpassen naar IP-adres waarop de orchestrator bereikbaar is.
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
   redis:
     image: redis
 ```
@@ -30,7 +32,7 @@ Je merkt misschien dat bovenstaand bestand geen gameserver bevat. Dit komt doord
 Naast het gebruik van een docker-compose bestand is het ook mogelijk om de diverse componenten los te starten met behulp van het `docker run` commando. Hieronder vind je de commando's om dit te doen. Let erop dat je de environment variables aanpast naar de juiste waardes.
 
 **Redis:** `docker run -d -p 6379:6379 redis`  
-**Orchestrator:** `docker run -d -p 5041:5041 -e REDIS_HOST=172.17.0.1 ghcr.io/days-stickworld/orchestrator:main`  
+**Orchestrator:** `docker run -d -v /var/run/docker.sock:/var/run/docker.sock -e REDIS_HOST=188.40.116.116 -e PUBLIC_IP=127.0.0.1 ghcr.io/days-stickworld/orchestrator:main`  
 **Game server:** `docker run -d -p 7777:7777/udp -e REDIS_HOST=172.17.0.1 -e SERVER_CLUSTER=EU-1 -e SERVER_HOST=127.0.0.1 -e SERVER_ID=days-stickworld-01 -e SERVER_PORT=7777 ghcr.io/days-stickworld/game:latest`  
 
 ### Communicatie tussen de componenten
