@@ -5,9 +5,15 @@ services:
     ports: 
       - "5041:80"
     environment:
-      - REDIS_HOST=redis
+      - REDIS_HOST=redis # Verwijst in dit voorbeeld naar de redis container, maar kan ook een IP-adres zijn
       - PUBLIC_IP=127.0.0.1 # Aanpassen naar IP-adres waarop de orchestrator bereikbaar is.
+      - DOCKER_NETWORK=days-stickworld # Optioneel, voegt de container toe aan een specifiek docker netwerk
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   redis:
     image: redis
+    
+networks:
+  default:
+    name: days-stickworld
+    driver: bridge
