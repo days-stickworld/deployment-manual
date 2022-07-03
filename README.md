@@ -19,12 +19,18 @@ services:
     ports: 
       - "5041:80"
     environment:
-      - REDIS_HOST=redis
+      - REDIS_HOST=redis # Verwijst in dit voorbeeld naar de redis container, maar kan ook een IP-adres zijn
       - PUBLIC_IP=127.0.0.1 # Aanpassen naar IP-adres waarop de orchestrator bereikbaar is.
+      - DOCKER_NETWORK=days-stickworld # Optioneel, voegt de container toe aan een specifiek docker netwerk
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   redis:
     image: redis
+    
+networks:
+  default:
+    name: days-stickworld
+    driver: bridge
 ```
 Je merkt misschien dat bovenstaand bestand geen gameserver bevat. Dit komt doordat de orchestrator zelf de eerste server voor je opstart. Zo heb je altijd een actieve server waarmee je kunt verbinden. Verder zal de orchestrator een nieuwe server opstarten wanneer de capaciteit op 70% of hoger komt.
 
