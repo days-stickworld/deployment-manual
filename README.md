@@ -20,19 +20,11 @@ services:
       - "5041:80"
     environment:
       - REDIS_HOST=redis
-  game-server:
-    image: ghcr.io/days-stickworld/game:latest
-    ports:
-      - "8888:7777/udp"
-    environment:
-      - REDIS_HOST=redis
-      - SERVER_CLUSTER=EU-1 # Servercluster, heeft verder geen functie maar wordt gebruikt voor identificatie en groepering
-      - SERVER_HOST=127.0.0.1 # Aanpassen naar publieke IP
-      - SERVER_ID=days-stickworld-01 # Servernaam
-      - SERVER_PORT=8888 # De publieke poort waarop de server te bereiken is. Let erop dat dit overeenkomt met het kopje ports hierboven
+      - PUBLIC_IP=127.0.0.1 # Aanpassen naar IP-adres waarop de orchestrator bereikbaar is.
   redis:
     image: redis
 ```
+Je merkt misschien dat bovenstaand bestand geen gameserver bevat. Dit komt doordat de orchestrator zelf de eerste server voor je opstart. Zo heb je altijd een actieve server waarmee je kunt verbinden. Verder zal de orchestrator een nieuwe server opstarten wanneer de capaciteit op 70% of hoger komt.
 
 ### Losse componenten starten met docker
 Naast het gebruik van een docker-compose bestand is het ook mogelijk om de diverse componenten los te starten met behulp van het `docker run` commando. Hieronder vind je de commando's om dit te doen. Let erop dat je de environment variables aanpast naar de juiste waardes.
