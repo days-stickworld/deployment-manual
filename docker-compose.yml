@@ -3,7 +3,7 @@ services:
   orchestrator:
     image: ghcr.io/days-stickworld/orchestrator:main
     ports: 
-      - "5041:5041"
+      - "5041:80"
     environment:
       - REDIS_HOST=redis
   game-server:
