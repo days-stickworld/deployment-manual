@@ -15,4 +15,4 @@ echo Als het niet werkt, vergeet niet te portforwarden!
 echo 			(Poort 7777)
 
 :serverStart_inDocker
-docker run -d -p 7777:7777/udp --name days-stickworld-server -e SERVER_CLUSTER=EU-1 -e SERVER_ID=%serverName% -e REDIS_HOST=%redis% -e SERVER_HOST=%server% -e SERVER_PORT=7777 parrotlync/days-stickworld-linux
+docker run -d -p 7777:7777/udp --name days-stickworld-server -e SERVER_CLUSTER=EU-1 -e SERVER_ID=%serverName% -e REDIS_HOST=%redis% -e SERVER_HOST=%server% -e SERVER_PORT=7777 ghcr.io/days-stickworld/game:latest
