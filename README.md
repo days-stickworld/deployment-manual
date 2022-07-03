@@ -8,9 +8,30 @@ Om een functionerende infrastructuur op te zetten voor DAY's Stickworld zijn er 
 - **Game client:** De game client draait lokaal bij de gebruiker. Dit is het daadwerkelijke spel.
 
 ### Deployment van de infrastructuur
+> :warning: **Let op**: Voor de deployment gaan we ervan uit dat er een **docker** omgeving beschikbaar is. Voor meer informatie omtrent docker, ![klik hier](https://docs.docker.com/).
+
 De docker containers van de gehoste componenten zijn te vinden in de bijbehorende repositories, onder "packages". Hieronder is een docker-compose file te vinden waarmee alle services gemakkelijk in één keer gedeployed kunnen worden. Kopieer dit bestand naar een machine waar docker op geïnstalleerd staat en run het commando `docker-compose up`, het kan ook zijn dat dit zonder streepje is (`docker compose up`). Om de stack te stoppen kun je het commando `docker-compose down` gebruiken.
 ```
-INSERT DOCKER COMPOSE FILE
+version: "3.4"
+services:
+  orchestrator:
+    image: ghcr.io/days-stickworld/orchestrator:main
+    ports: 
+      - "5041:5041"
+    environment:
+      - REDIS_HOST=redis
+  game-server:
+    image: ghcr.io/days-stickworld/game:main
+    ports:
+      - "8888:7777/udp"
+    environment:
+      - REDIS_HOST=redis
+      - SERVER_CLUSTER=EU-1 # Servercluster, heeft verder geen functie maar wordt gebruikt voor identificatie en groepering
+      - SERVER_HOST=127.0.0.1 # Aanpassen naar publieke IP
+      - SERVER_ID=days-stickworld-01 # Servernaam
+      - SERVER_PORT=8888 # De publieke poort waarop de server te bereiken is. Let erop dat dit overeenkomt met het kopje ports hierboven
+  redis:
+    image: redis
 ```
 
 ### Communicatie tussen de componenten
@@ -32,3 +53,14 @@ Wanneer dit is opgezet kun je lokaal de game client opstarten. Het is hierbij we
 - Pas de waarde van "Orchestration Endpoint" aan
 
 ![](https://github.com/days-stickworld/deployment-manual/blob/main/Screenshot%202022-07-03%20185745.png?raw=true)
+
+
+### Nieuwe build maken
+Wanneer de orchestrator is aangepast kun je een nieuwe build van de game maken. Volg hiervoor de volgende stappen:
+- Klik linksboven in Unity op "File"
+- Klik op "Build Settings"
+- Selecteer het platform "Windows, Mac, Linux"
+- Selecteer je gewenste Target Platform
+- Klik linksonderin op Build en selecteer een folder waar je deze build wil opslaan
+
+De opgeslagen build kun je vervolgens starten, en als het goed is zie je de actieve game server die je eerder had opgestart.
