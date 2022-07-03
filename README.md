@@ -39,7 +39,7 @@ Naast het gebruik van een docker-compose bestand is het ook mogelijk om de diver
 
 **Redis:** `docker run -d -p 6379:6379 redis`  
 **Orchestrator:** `docker run -d -p 5041:5041 -e REDIS_HOST=172.17.0.1 ghcr.io/days-stickworld/orchestrator:main`  
-**Game server:** `docker run -d -p 7777:7777/udp -e REDIS_HOST=172.17.0.1 -e SERVER_CLUSTER=EU-1 -e SERVER_HOST=127.0.0.1 -e SERVER_ID=days-stickworld-01 -e SERVER_PORT=7777`  
+**Game server:** `docker run -d -p 7777:7777/udp -e REDIS_HOST=172.17.0.1 -e SERVER_CLUSTER=EU-1 -e SERVER_HOST=127.0.0.1 -e SERVER_ID=days-stickworld-01 -e SERVER_PORT=7777 ghcr.io/days-stickworld/game:latest`  
 
 ### Communicatie tussen de componenten
 Wanneer dit allemaal draait dien je ervoor te zorgen dat de communicatie tussen de diverse componenten goed kan werken. Let hierbij op onderstaande punten. De communicatie tussen orchestrator, redis en game servers is in principe al geregeld wanneer je bovenstaande docker-compose file op één machine deployed.
