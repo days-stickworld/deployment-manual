@@ -1,0 +1,20 @@
+version: "3.4"
+services:
+  orchestrator:
+    image: ghcr.io/days-stickworld/orchestrator:main
+    ports: 
+      - "5041:5041"
+    environment:
+      - REDIS_HOST=redis
+  game-server:
+    image: ghcr.io/days-stickworld/game:main
+    ports:
+      - "8888:7777/udp"
+    environment:
+      - REDIS_HOST=redis
+      - SERVER_CLUSTER=EU-1 # Servercluster, heeft verder geen functie maar wordt gebruikt voor identificatie en groepering
+      - SERVER_HOST=127.0.0.1 # Aanpassen naar publieke IP
+      - SERVER_ID=days-stickworld-01 # Servernaam
+      - SERVER_PORT=8888 # De publieke poort waarop de server te bereiken is. Let erop dat dit overeenkomt met het kopje ports hierboven
+  redis:
+    image: redis
