@@ -21,7 +21,7 @@ services:
     environment:
       - REDIS_HOST=redis
   game-server:
-    image: ghcr.io/days-stickworld/game:main
+    image: ghcr.io/days-stickworld/game:latest
     ports:
       - "8888:7777/udp"
     environment:
@@ -34,6 +34,13 @@ services:
     image: redis
 ```
 
+### Losse componenten starten met docker
+Naast het gebruik van een docker-compose bestand is het ook mogelijk om de diverse componenten los te starten met behulp van het `docker run` commando. Hieronder vind je de commando's om dit te doen. Let erop dat je de environment variables aanpast naar de juiste waardes.
+
+**Redis:** `docker run -d -p 6379:6379 redis`  
+**Orchestrator:** `docker run -d -p 5041:5041 -e REDIS_HOST=172.17.0.1 ghcr.io/days-stickworld/orchestrator:main`  
+**Game server:** `docker run -d -p 7777:7777/udp -e REDIS_HOST=172.17.0.1 -e SERVER_CLUSTER=EU-1 -e SERVER_HOST=127.0.0.1 -e SERVER_ID=days-stickworld-01 -e SERVER_PORT=7777`  
+
 ### Communicatie tussen de componenten
 Wanneer dit allemaal draait dien je ervoor te zorgen dat de communicatie tussen de diverse componenten goed kan werken. Let hierbij op onderstaande punten. De communicatie tussen orchestrator, redis en game servers is in principe al geregeld wanneer je bovenstaande docker-compose file op één machine deployed.
 - De orchestrator moet bij de redis instance kunnen komen
@@ -44,7 +51,7 @@ Wanneer dit allemaal draait dien je ervoor te zorgen dat de communicatie tussen 
 Wanneer dit is opgezet kun je lokaal de game client opstarten. Het is hierbij wel belangrijk om in Unity de endpoint van de orchestrator aan te passen, zodat de game de beschikbare servers op kan vragen. Doorloop hiervoor de volgende stappen:
 - Clone de [game](https://github.com/days-stickworld/game) repository
 - Open het project in Unity
-- Open de "Menu" scene
+- Open de "Assets/Scenes/Menu" scene
 - Klap "Main_Menu_New" uit
 - Klap "Canv_Options" uit
 - Klap "ServerPanel" uit
@@ -64,3 +71,6 @@ Wanneer de orchestrator is aangepast kun je een nieuwe build van de game maken. 
 - Klik linksonderin op Build en selecteer een folder waar je deze build wil opslaan
 
 De opgeslagen build kun je vervolgens starten, en als het goed is zie je de actieve game server die je eerder had opgestart.
+
+### Vragen of problemen
+Mocht je tijdens het gebruik van de game of orchestrator vragen hebben of problemen tegenkomen, kun je altijd een issue aanmaken in de desbetreffende repository.
